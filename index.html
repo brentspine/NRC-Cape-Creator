@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Cape Creator</title>
-    <style>
-        body { font-family: Arial; background: #111; color: white; padding: 20px; }
-        canvas { background: #222; display: block; margin-top: 20px; }
-        .controls { margin-top: 20px; }
-        input, select { margin: 10px 0; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -16,31 +11,31 @@
 
 <div class="controls">
 
-    <label>Bild für "Vorne" wählen:</label><br>
+    <label>Select image for the "Front":</label><br>
     <input type="file" id="frontImageInput" accept="image/*"><br>
 
-    <label>Second Color (Standardfarbe):</label><br>
+    <label>Cape color:</label><br>
     <input type="color" id="colorPicker" value="#ff00ff"><br>
 
-    <label><input type="checkbox" id="enableGradient"> Gradient aktivieren</label><br>
+    <label><input type="checkbox" id="enableGradient">Enable gradient</label><br>
 
     <div id="gradientControls" style="display:none; margin-left:20px;">
-        <label>Gradient Farbe 1:</label><br>
+        <label>1. Gradient color:</label><br>
         <input type="color" id="gradColor1" value="#ff00ff"><br>
 
-        <label>Gradient Farbe 2:</label><br>
+        <label>2. Gradient color:</label><br>
         <input type="color" id="gradColor2" value="#0000ff"><br>
 
-        <label>Richtung:</label><br>
+        <label>Direction:</label><br>
         <select id="gradDirection">
-            <option value="vertical">Vertikal</option>
+            <option value="vertical">Vertical</option>
             <option value="horizontal">Horizontal</option>
             <option value="diag1">Diagonal ↘</option>
             <option value="diag2">Diagonal ↙</option>
         </select>
     </div>
 
-    <button id="downloadBtn">Cape herunterladen</button>
+    <button id="downloadBtn">Download Cape</button>
 </div>
 
 <canvas id="capeCanvas" width="512" height="256"></canvas>
