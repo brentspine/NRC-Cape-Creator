@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Cape Creator</title>
+    <style>
+        body { font-family: Arial; background: #111; color: white; padding: 20px; }
+        canvas { background: #222; display: block; margin-top: 20px; }
+        .controls { margin-top: 20px; }
+        input { margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<h1>Cape Creation Tool</h1>
+
+<div class="controls">
+    <label>Bild für "Vorne" wählen:</label><br>
+    <input type="file" id="frontImageInput" accept="image/*"><br>
+
+    <label>Second Color für restliche Flächen:</label><br>
+    <input type="color" id="colorPicker" value="#ff00ff"><br>
+
+    <button id="downloadBtn">Cape herunterladen</button>
+</div>
+
+<canvas id="capeCanvas" width="512" height="256"></canvas>
+
+<script>
+    const templateSrc = "nrc_cape_template.png";
+    const templateImg = new Image();
+    templateImg.src = templateSrc;
+
+    const canvas = document.getElementById("capeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let frontImage = null;
+
+    const FRONT_X = 9;
+    const FRONT_Y = 9;
+    const FRONT_W = 80;
+    const FRONT_H = 128;
+
+    templateImg.onload = () => {
+        drawCape();
+    };
+
+    function drawCape() {
+        if (!templateImg.complete) return;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(templateImg, 0, 0);
+
+        const color = document.getElementById("colorPicker").value;
+        ctx.fillStyle = color;
+
+        ctx.globalCompositeOperation = "source-atop";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.drawImage(templateImg, 0, 0);
+
+        if (frontImage) {
+            ctx.globalCompositeOperation = "source-over";
+            ctx.drawImage(frontImage, FRONT_X, FRONT_Y, FRONT_W, FRONT_H);
+        }
+
+        ctx.globalCompositeOperation = "source-over";
+    }
+
+    document.getElementById("colorPicker").addEventListener("input", drawCape);
+
+    document.getElementById("frontImageInput").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = () => {
+            frontImage = img;
+            drawCape();
+        };
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+        const link = document.createElement("a");
+        link.download = "custom_cape.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+</script>
+
+</body>
+</html>
