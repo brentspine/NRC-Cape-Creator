@@ -20,6 +20,9 @@
     <label>Select image for the "Back":</label><br>
     <input type="file" id="backImageInput" accept="image/*"><br>
 
+    <label>Select image for the "Elytra":</label><br>
+    <input type="file" id="elytraImageInput" accept="image/*"><br>
+
     <label>Cape color:</label><br>
     <input type="color" id="colorPicker" value="#ff00ff"><br>
 
@@ -59,7 +62,9 @@ const ctx = canvas.getContext("2d");
 
 let frontImage = null;
 let backImage = null;
+let elytraImage = null;
 
+// Cape positions
 const FRONT_X = 8;
 const FRONT_Y = 8;
 const FRONT_W = 80;
@@ -69,6 +74,12 @@ const BACK_X = 96;
 const BACK_Y = 8;
 const BACK_W = 80;
 const BACK_H = 128;
+
+// Elytra position (your exact spec)
+const ELYTRA_X = 288;
+const ELYTRA_Y = 16;
+const ELYTRA_W = 80;
+const ELYTRA_H = 160;
 
 templateImg.onload = () => drawCape();
 
@@ -95,8 +106,10 @@ function drawCape() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Draw template first
     ctx.drawImage(templateImg, 0, 0);
 
+    // Cape coloring
     let fillStyle =
         document.getElementById("enableGradient").checked
             ? createGradient()
@@ -106,17 +119,55 @@ function drawCape() {
     ctx.fillStyle = fillStyle;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Put outline OVER the color
     ctx.globalCompositeOperation = "destination-over";
     ctx.drawImage(templateImg, 0, 0);
 
     ctx.globalCompositeOperation = "source-over";
 
+    // Front / back cape images
     if (frontImage) ctx.drawImage(frontImage, FRONT_X, FRONT_Y, FRONT_W, FRONT_H);
     if (backImage) ctx.drawImage(backImage, BACK_X, BACK_Y, BACK_W, BACK_H);
+
+    // --------------------------
+    // ⭐ ELYTRA MASK / CROP ⭐
+    // --------------------------
+    if (elytraImage) {
+
+        // Mask canvas (pinke Elytra-Form)
+        const maskCanvas = document.createElement("canvas");
+        maskCanvas.width = ELYTRA_W;
+        maskCanvas.height = ELYTRA_H;
+        const maskCtx = maskCanvas.getContext("2d");
+
+        // Extract pink Elytra mask from template
+        maskCtx.drawImage(
+            templateImg,
+            ELYTRA_X, ELYTRA_Y, ELYTRA_W, ELYTRA_H,
+            0, 0, ELYTRA_W, ELYTRA_H
+        );
+
+        // Elytra drawing canvas
+        const elyCanvas = document.createElement("canvas");
+        elyCanvas.width = ELYTRA_W;
+        elyCanvas.height = ELYTRA_H;
+        const elyCtx = elyCanvas.getContext("2d");
+
+        // Draw user Elytra
+        elyCtx.drawImage(elytraImage, 0, 0, ELYTRA_W, ELYTRA_H);
+
+        // ⭐ Apply mask — cut off everything outside pink
+        elyCtx.globalCompositeOperation = "destination-in";
+        elyCtx.drawImage(maskCanvas, 0, 0);
+
+        // Draw masked Elytra onto final texture
+        ctx.drawImage(elyCanvas, ELYTRA_X, ELYTRA_Y);
+    }
 
     ctx.globalCompositeOperation = "source-over";
 }
 
+// Event listeners
 document.getElementById("enableGradient").addEventListener("change", () => {
     document.getElementById("gradientControls").style.display =
         document.getElementById("enableGradient").checked ? "block" : "none";
@@ -155,6 +206,19 @@ document.getElementById("backImageInput").addEventListener("change", e => {
     };
 });
 
+document.getElementById("elytraImageInput").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+
+    img.onload = () => {
+        elytraImage = img;
+        drawCape();
+    };
+});
+
 document.getElementById("downloadBtn").addEventListener("click", () => {
     const link = document.createElement("a");
     link.download = "custom_cape.png";
@@ -165,9 +229,11 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
 document.getElementById("resetBtn").addEventListener("click", () => {
     frontImage = null;
     backImage = null;
+    elytraImage = null;
 
     document.getElementById("frontImageInput").value = "";
     document.getElementById("backImageInput").value = "";
+    document.getElementById("elytraImageInput").value = "";
 
     document.getElementById("colorPicker").value = "#ff00ff";
     document.getElementById("enableGradient").checked = false;
