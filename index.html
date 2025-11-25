@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div class="wrapper">
+
 <h1>Cape Creation Tool</h1>
 
 <div class="controls">
@@ -21,7 +23,7 @@
     <label>Cape color:</label><br>
     <input type="color" id="colorPicker" value="#ff00ff"><br>
 
-    <label><input type="checkbox" id="enableGradient">Enable gradient</label><br>
+    <label><input type="checkbox" id="enableGradient"> Enable gradient</label><br>
 
     <div id="gradientControls" style="display:none; margin-left:20px;">
         <label>1. Gradient color:</label><br>
@@ -44,6 +46,8 @@
 </div>
 
 <canvas id="capeCanvas" width="512" height="256"></canvas>
+
+</div>
 
 <script>
 const templateSrc = "nrc_cape_template.png";
@@ -75,15 +79,10 @@ function createGradient() {
 
     let grad;
 
-    if (dir === "vertical") {
-        grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    } else if (dir === "horizontal") {
-        grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    } else if (dir === "diag1") {
-        grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    } else if (dir === "diag2") {
-        grad = ctx.createLinearGradient(canvas.width, 0, 0, canvas.height);
-    }
+    if (dir === "vertical") grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    else if (dir === "horizontal") grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    else if (dir === "diag1") grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    else grad = ctx.createLinearGradient(canvas.width, 0, 0, canvas.height);
 
     grad.addColorStop(0, c1);
     grad.addColorStop(1, c2);
@@ -98,13 +97,10 @@ function drawCape() {
 
     ctx.drawImage(templateImg, 0, 0);
 
-    let fillStyle;
-
-    if (document.getElementById("enableGradient").checked) {
-        fillStyle = createGradient();
-    } else {
-        fillStyle = document.getElementById("colorPicker").value;
-    }
+    let fillStyle =
+        document.getElementById("enableGradient").checked
+            ? createGradient()
+            : document.getElementById("colorPicker").value;
 
     ctx.globalCompositeOperation = "source-atop";
     ctx.fillStyle = fillStyle;
@@ -115,13 +111,8 @@ function drawCape() {
 
     ctx.globalCompositeOperation = "source-over";
 
-    if (frontImage) {
-        ctx.drawImage(frontImage, FRONT_X, FRONT_Y, FRONT_W, FRONT_H);
-    }
-
-    if (backImage) {
-        ctx.drawImage(backImage, BACK_X, BACK_Y, BACK_W, BACK_H);
-    }
+    if (frontImage) ctx.drawImage(frontImage, FRONT_X, FRONT_Y, FRONT_W, FRONT_H);
+    if (backImage) ctx.drawImage(backImage, BACK_X, BACK_Y, BACK_W, BACK_H);
 
     ctx.globalCompositeOperation = "source-over";
 }
@@ -144,6 +135,7 @@ document.getElementById("frontImageInput").addEventListener("change", e => {
 
     const img = new Image();
     img.src = URL.createObjectURL(file);
+
     img.onload = () => {
         frontImage = img;
         drawCape();
@@ -156,6 +148,7 @@ document.getElementById("backImageInput").addEventListener("change", e => {
 
     const img = new Image();
     img.src = URL.createObjectURL(file);
+
     img.onload = () => {
         backImage = img;
         drawCape();
@@ -170,28 +163,19 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
-
-    // Reset internal images
     frontImage = null;
     backImage = null;
 
-    // Reset input fields
     document.getElementById("frontImageInput").value = "";
     document.getElementById("backImageInput").value = "";
 
-    // Reset primary color
     document.getElementById("colorPicker").value = "#ff00ff";
-
-    // Reset gradient toggle
     document.getElementById("enableGradient").checked = false;
     document.getElementById("gradientControls").style.display = "none";
-
-    // Reset gradient colors and direction
     document.getElementById("gradColor1").value = "#ff00ff";
     document.getElementById("gradColor2").value = "#0000ff";
     document.getElementById("gradDirection").value = "vertical";
 
-    // Redraw cape with defaults
     drawCape();
 });
 </script>
