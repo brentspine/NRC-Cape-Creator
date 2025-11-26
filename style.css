@@ -5,9 +5,9 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #0E0F14;
-  color: #E1E1E6;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #000;   /* pure black background */
+  color: #fff;        /* pure white text */
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -26,23 +26,36 @@ body {
 
 h1 {
   margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #fff;
 }
 
 .controls {
-  background: rgba(255, 255, 255, 0.05);
+  background: #111; /* dark panel */
+  border: 1px solid #333;
   border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(255,255,255,0.1);
   width: 100%;
   max-width: 350px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(255,255,255,0.15);
 }
 
 .controls label {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 14px;
+  font-weight: 600;
+  color: #fff;
 }
 
 .controls input[type="file"] {
@@ -53,35 +66,35 @@ h1 {
 .controls input[type="color"] {
   width: 100%;
   height: 32px;
-  border: none;
-  padding: 0;
+  border: 1px solid #444;
+  border-radius: 6px;
   margin-top: 8px;
-  background: none;
+  background: #000;
   cursor: pointer;
 }
 
 .controls button {
-  margin-top: 15px;
-  padding: 10px 15px;
-  background: linear-gradient(135deg, #00E0FF, #009FB7);
+  margin-top: 20px;
+  padding: 12px 18px;
+  background: #fff;   /* white button */
   border: none;
   border-radius: 8px;
-  color: white;
+  color: #000;        /* black text */
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 224, 255, 0.6);
-  transition: box-shadow 0.2s, transform 0.1s;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .controls button:hover {
-  box-shadow: 0 6px 10px rgba(0, 224, 255, 0.8);
-  transform: translateY(-1px);
+  background: #eee;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255,255,255,0.2);
 }
 
 .controls button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 16px rgba(0, 224, 255, 0.6);
+  background: #ddd;
 }
 
 #gradientControls {
@@ -92,11 +105,11 @@ h1 {
 #gradientControls select {
   margin-top: 8px;
   width: 100%;
-  padding: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
+  padding: 8px;
+  background: #000;
+  border: 1px solid #444;
   border-radius: 6px;
-  color: #E1E1E6;
+  color: #fff;
   font-size: 14px;
   cursor: pointer;
 }
@@ -105,11 +118,11 @@ canvas {
   width: 100%;
   max-width: 512px;
   height: auto;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid #333;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 24px rgba(255,255,255,0.1);
 }
 
 #gradDirection {
-  color: black;
+  color: #fff;
 }
