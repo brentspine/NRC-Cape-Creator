@@ -31,12 +31,21 @@
 
   private initTemplate(): void {
     this.templateImg = new Image()
-    this.templateImg.src = 'nrc_cape_template.png'
+    // Try loading the template from the public folder using Vite base URL
+    const templatePath = `${import.meta.env.BASE_URL}nrc_cape_template.png`
+    const fallbackLogo = `${import.meta.env.BASE_URL}logo.svg`
+
+    this.templateImg.src = templatePath
     this.templateImg.onload = () => {
       this.templateReady = true
     }
+    // If the PNG is not found, try falling back to the project logo (SVG)
     this.templateImg.onerror = () => {
-      this.templateReady = false
+      // attempt fallback
+      this.templateImg!.onerror = () => {
+        this.templateReady = false
+      }
+      this.templateImg!.src = fallbackLogo
     }
   }
 
