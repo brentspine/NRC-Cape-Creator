@@ -56,7 +56,7 @@ function App() {
   return (
     <div className="wrapper">
       <div className="logo-container">
-        <img src="/logo.svg" alt="CLIENT CAPE Logo" className="logo-img" />
+        <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="CLIENT CAPE Logo" className="logo-img" />
       </div>
       <div className="container">
         <Controls
