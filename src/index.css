@@ -70,7 +70,7 @@ body::before {
 .container {
   display: flex;
   gap: 40px;
-  align-items: center;
+  align-items: flex-start; /* keep items pinned to top */
   justify-content: center;
   width: 100%;
   flex-wrap: wrap;

@@ -35,18 +35,11 @@ function App() {
     )
   }, [frontImage, backImage, elytraImage, gradientColors, gradDirection, renderer])
 
-  // Draw initial cape on mount with white gradient
+  // On first load, run the same routine as Reset
   useEffect(() => {
-    if (!canvasRef.current) return
-    renderer.drawCape(
-      canvasRef.current,
-      null,
-      null,
-      null,
-      ['#ffffff'],
-      'vertical'
-    )
-  }, [renderer])
+    // Trigger the same state logic as clicking Reset
+    handleReset()
+  }, [])
 
   const handleDownload = () => {
     if (!canvasRef.current) return

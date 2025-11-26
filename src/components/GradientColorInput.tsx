@@ -17,7 +17,7 @@ const GradientColorInput: FC<GradientColorInputProps> = ({
 }) => {
   return (
     <div className="grad-row">
-      <label>{index + 1}. Farbe</label>
+      <label>{index + 1}. Color</label>
       <input
         type="color"
         value={color}

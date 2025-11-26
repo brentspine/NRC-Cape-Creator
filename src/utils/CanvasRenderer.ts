@@ -62,11 +62,13 @@
       ctx.globalCompositeOperation = 'source-over'
     }
 
-    // Create and draw gradient
-    const gradient = this.createGradient(ctx, canvas, gradientColors, gradDirection)
+    // Create and draw gradient restricted to 0,0 -> 368x176
+    const GRAD_W = 368
+    const GRAD_H = 176
+    const gradient = this.createGradient(ctx, { width: GRAD_W, height: GRAD_H } as HTMLCanvasElement, gradientColors, gradDirection)
     ctx.globalCompositeOperation = 'source-atop'
     ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillRect(0, 0, GRAD_W, GRAD_H)
 
     // Draw template on top
     if (this.templateReady && this.templateImg) {

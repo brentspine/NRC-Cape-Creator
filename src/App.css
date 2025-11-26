@@ -12,6 +12,9 @@
   flex-direction: column;
   transition: all 0.3s ease;
   animation: slideUp 0.6s ease-out;
+  align-self: flex-start; /* grow downward from top, not upward */
+  max-height: 85vh; /* cap height on small screens */
+  overflow-y: auto; /* scroll within settings instead of pushing layout */
 }
 
 @keyframes slideUp {

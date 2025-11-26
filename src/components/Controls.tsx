@@ -106,15 +106,15 @@ const Controls: FC<ControlsProps> = ({
             />
           ))}
           <button type="button" onClick={handleAddColor}>
-            ✨ Farbe hinzufügen
+            ✨ Add Color
           </button>
 
-          <label>🎨 Richtung:</label>
+          <label>🎨 Direction:</label>
           <select
             value={gradDirection}
             onChange={(e) => onGradDirectionChange(e.target.value as 'vertical' | 'horizontal')}
           >
-            <option value="vertical">⬇️ Vertikal</option>
+            <option value="vertical">⬇️ Vertical</option>
             <option value="horizontal">➡️ Horizontal</option>
           </select>
         </div>
