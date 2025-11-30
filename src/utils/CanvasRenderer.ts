@@ -55,7 +55,19 @@
     backImage: HTMLImageElement | null,
     elytraImage: HTMLImageElement | null,
     gradientColors: string[],
-    gradDirection: 'vertical' | 'horizontal'
+    gradDirection: 'vertical' | 'horizontal',
+    options?: {
+      emojiEnabled?: boolean
+      emoji?: string
+      emojiSize?: number
+      emojiSpacing?: number
+      emojiOpacity?: number
+      emojiRotation?: number
+      emojiRandomRotation?: boolean
+      emojiJitter?: number
+      emojiApplyToElytra?: boolean
+      emojiSeed?: number
+    }
   ): void {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -78,6 +90,73 @@
     ctx.globalCompositeOperation = 'source-atop'
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, GRAD_W, GRAD_H)
+
+    // Draw emoji tiled pattern above the color but below user images
+    if (options?.emojiEnabled && options?.emoji) {
+      const emoji = options.emoji
+      const size = options.emojiSize || 48
+      const spacing = options.emojiSpacing || 64
+      const opacity = typeof options.emojiOpacity === 'number' ? options.emojiOpacity : 1
+      const baseRotation = options.emojiRotation || 0
+      const randomRotation = !!options.emojiRandomRotation
+      const jitter = options.emojiJitter || 0
+      const applyToElytra = options.emojiApplyToElytra !== false
+      const seed = options.emojiSeed || 0
+
+      ctx.save()
+      ctx.globalAlpha = opacity
+      ctx.font = `${size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+
+      const rand = (x: number, y: number) => {
+        // deterministic pseudo-random based on coordinates and seed
+        const s = Math.sin(x * 12.9898 + y * 78.233 + seed) * 43758.5453
+        return s - Math.floor(s)
+      }
+
+      for (let y = 0; y < GRAD_H + spacing; y += spacing) {
+        const rowIndex = Math.floor(y / spacing)
+        const offset = (rowIndex % 2 === 0) ? 0 : spacing / 2
+        for (let x = -spacing; x < GRAD_W + spacing; x += spacing) {
+          let px = x + offset + spacing / 2
+          let py = y + spacing / 2
+
+          // apply jitter
+          if (jitter > 0) {
+            const r = rand(px + 0.1, py + 0.2)
+            const j = (r * 2 - 1) * jitter * spacing
+            px += j
+            py += (rand(px + 0.3, py + 0.4) * 2 - 1) * jitter * spacing
+          }
+
+          // Skip if not applying to elytra and the point intersects elytra region
+          if (!applyToElytra) {
+            if (
+              px >= this.ELYTRA_X && px <= this.ELYTRA_X + this.ELYTRA_W &&
+              py >= this.ELYTRA_Y && py <= this.ELYTRA_Y + this.ELYTRA_H
+            ) {
+              continue
+            }
+          }
+
+          // rotation
+          let angleDeg = baseRotation
+          if (randomRotation) {
+            angleDeg = (rand(px + 0.5, py + 0.6) * 360) - 180
+          }
+          const angle = (angleDeg * Math.PI) / 180
+
+          ctx.save()
+          ctx.translate(px, py)
+          if (angle !== 0) ctx.rotate(angle)
+          ctx.fillText(emoji as string, 0, 0)
+          ctx.restore()
+        }
+      }
+
+      ctx.restore()
+    }
 
     // Draw template on top
     if (this.templateReady && this.templateImg) {

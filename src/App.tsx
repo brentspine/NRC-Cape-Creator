@@ -17,6 +17,26 @@ function App() {
     setElytraImage,
     setGradientColors,
     setGradDirection,
+    emojiEnabled,
+    emoji,
+    emojiSize,
+    emojiSpacing,
+    setEmojiEnabled,
+    setEmoji,
+    setEmojiSize,
+    setEmojiSpacing,
+    emojiOpacity,
+    emojiRotation,
+    emojiRandomRotation,
+    emojiJitter,
+    emojiApplyToElytra,
+    emojiSeed,
+    setEmojiOpacity,
+    setEmojiRotation,
+    setEmojiRandomRotation,
+    setEmojiJitter,
+    setEmojiApplyToElytra,
+    setEmojiSeed,
     reset,
   } = useCapeState()
 
@@ -31,9 +51,21 @@ function App() {
       backImage,
       elytraImage,
       gradientColors,
-      gradDirection
+      gradDirection,
+      {
+        emojiEnabled,
+        emoji,
+        emojiSize,
+        emojiSpacing,
+        emojiOpacity,
+        emojiRotation,
+        emojiRandomRotation,
+        emojiJitter,
+        emojiApplyToElytra,
+        emojiSeed,
+      }
     )
-  }, [frontImage, backImage, elytraImage, gradientColors, gradDirection, renderer])
+  }, [frontImage, backImage, elytraImage, gradientColors, gradDirection, emojiEnabled, emoji, emojiSize, emojiSpacing, emojiOpacity, emojiRotation, emojiRandomRotation, emojiJitter, emojiApplyToElytra, emojiSeed, renderer])
 
   // On first load, run the same routine as Reset
   useEffect(() => {
@@ -69,6 +101,26 @@ function App() {
           onGradDirectionChange={setGradDirection}
           onDownload={handleDownload}
           onReset={handleReset}
+          emojiEnabled={emojiEnabled}
+          emoji={emoji}
+          emojiSize={emojiSize}
+          emojiSpacing={emojiSpacing}
+          setEmojiEnabled={setEmojiEnabled}
+          setEmoji={setEmoji}
+          setEmojiSize={setEmojiSize}
+          setEmojiSpacing={setEmojiSpacing}
+          emojiOpacity={emojiOpacity}
+          emojiRotation={emojiRotation}
+          emojiRandomRotation={emojiRandomRotation}
+          emojiJitter={emojiJitter}
+          emojiApplyToElytra={emojiApplyToElytra}
+          emojiSeed={emojiSeed}
+          setEmojiOpacity={setEmojiOpacity}
+          setEmojiRotation={setEmojiRotation}
+          setEmojiRandomRotation={setEmojiRandomRotation}
+          setEmojiJitter={setEmojiJitter}
+          setEmojiApplyToElytra={setEmojiApplyToElytra}
+          setEmojiSeed={setEmojiSeed}
         />
         <canvas
           ref={canvasRef}

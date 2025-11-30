@@ -13,6 +13,26 @@ const Controls: FC<ControlsProps> = ({
   onGradDirectionChange,
   onDownload,
   onReset,
+  emojiEnabled,
+  emoji,
+  emojiSize,
+  emojiSpacing,
+  setEmojiEnabled,
+  setEmoji,
+  setEmojiSize,
+  setEmojiSpacing,
+  emojiOpacity,
+  emojiRotation,
+  emojiRandomRotation,
+  emojiJitter,
+  emojiApplyToElytra,
+  emojiSeed,
+  setEmojiOpacity,
+  setEmojiRotation,
+  setEmojiRandomRotation,
+  setEmojiJitter,
+  setEmojiApplyToElytra,
+  setEmojiSeed,
 }) => {
   const [cropperState, setCropperState] = useState<{
     show: boolean
@@ -117,6 +137,116 @@ const Controls: FC<ControlsProps> = ({
             <option value="vertical">⬇️ Vertical</option>
             <option value="horizontal">➡️ Horizontal</option>
           </select>
+        </div>
+
+        <div id="emojiControls" style={{ marginTop: '12px' }}>
+          <label>🙂 Emoji Overlay</label>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+            <input
+              type="checkbox"
+              checked={emojiEnabled}
+              onChange={(e) => setEmojiEnabled(e.target.checked)}
+            />
+            <input
+              type="text"
+              placeholder="Paste an emoji here"
+              value={emoji}
+              onChange={(e) => setEmoji(e.target.value)}
+              style={{ width: '120px' }}
+            />
+          </div>
+
+          {emojiEnabled && (
+            <>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ flex: 1 }}>
+                  <label>🔍 Emoji Size: {emojiSize}px</label>
+                  <input
+                    type="range"
+                    min={16}
+                    max={128}
+                    step={4}
+                    value={emojiSize}
+                    onChange={(e) => setEmojiSize(Number(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+
+                <div style={{ flex: 1 }}>
+                  <label>🧩 Spacing: {emojiSpacing}px</label>
+                  <input
+                    type="range"
+                    min={16}
+                    max={128}
+                    step={4}
+                    value={emojiSpacing}
+                    onChange={(e) => setEmojiSpacing(Number(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ flex: 1 }}>
+                  <label>🔆 Opacity: {Math.round(emojiOpacity * 100)}%</label>
+                  <input
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={emojiOpacity}
+                    onChange={(e) => setEmojiOpacity(Number(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+
+                <div style={{ flex: 1 }}>
+                  <label>↻ Rotation: {emojiRotation}°</label>
+                  <input
+                    type="range"
+                    min={-180}
+                    max={180}
+                    step={1}
+                    value={emojiRotation}
+                    onChange={(e) => setEmojiRotation(Number(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '8px' }}>
+                <label style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <input type="checkbox" checked={emojiRandomRotation} onChange={(e) => setEmojiRandomRotation(e.target.checked)} /> Random rotation
+                </label>
+                <label style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <input type="checkbox" checked={emojiApplyToElytra} onChange={(e) => setEmojiApplyToElytra(e.target.checked)} /> Apply to Elytra
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ flex: 1 }}>
+                  <label>🎲 Jitter: {Math.round(emojiJitter * 100)}%</label>
+                  <input type="range" min={0} max={0.5} step={0.01} value={emojiJitter} onChange={(e) => setEmojiJitter(Number(e.target.value))} style={{ width: '100%' }} />
+                </div>
+                <div style={{ width: 120 }}>
+                  <label>Seed</label>
+                  <input type="number" value={emojiSeed} onChange={(e) => setEmojiSeed(Number(e.target.value))} style={{ width: '100%' }} />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
+                {['🤖','🌈','✨','🔥','⚡','🍕','🍩','🎮','👑','💀'].map((emo) => (
+                  <button key={emo} type="button" onClick={() => setEmoji(emo)} style={{ padding: 6 }}>
+                    {emo}
+                  </button>
+                ))}
+
+                <button type="button" onClick={() => { const list=['🤖','🌈','✨','🔥','⚡','🍕','🍩','🎮','👑','💀']; setEmoji(list[Math.floor(Math.random()*list.length)]) }}>
+                  🎲 Random
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="button-group">
