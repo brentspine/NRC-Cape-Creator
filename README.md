@@ -11,7 +11,7 @@
 <p align="center">
   <a href="#-features">Features</a> •
   <a href="#-getting-started">Getting Started</a> •
-  <a href="#-usage">Usage</a> •
+  <a href="#-usage">Usage</a>
 </p>
 
 ---
