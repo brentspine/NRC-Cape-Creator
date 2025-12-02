@@ -134,11 +134,6 @@ const MiddleColumn: FC<MiddleColumnProps> = ({
       <div className="tab-content" role="tabpanel">
         {activeTab === 'gradient' && (
           <div className="gradient-panel">
-            {/* Info about gradient area */}
-            <div className="gradient-info">
-              <span>↙️ Applied to cape area (368×176px)</span>
-            </div>
-            
             {/* Live gradient preview */}
             <div 
               className="gradient-preview"

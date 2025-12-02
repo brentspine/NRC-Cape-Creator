@@ -90,13 +90,32 @@
       ctx.globalCompositeOperation = 'source-over'
     }
 
-    // Create and draw gradient restricted to 0,0 -> 368x176
-    const GRAD_W = 368
-    const GRAD_H = 176
-    const gradient = this.createGradient(ctx, { width: GRAD_W, height: GRAD_H } as HTMLCanvasElement, gradientColors, gradDirection)
+    // Cape area: fill 0,0 to 176,136, gradient starts at 8,8
+    const CAPE_FILL_X = 0
+    const CAPE_FILL_Y = 0
+    const CAPE_FILL_W = 176
+    const CAPE_FILL_H = 136
+    const CAPE_GRAD_START_X = 8
+    const CAPE_GRAD_START_Y = 8
+    const CAPE_GRAD_W = 168  // from 8 to 176
+    const CAPE_GRAD_H = 128  // from 8 to 136
+    const capeGradient = this.createGradientAt(ctx, CAPE_GRAD_START_X, CAPE_GRAD_START_Y, CAPE_GRAD_W, CAPE_GRAD_H, gradientColors, gradDirection)
     ctx.globalCompositeOperation = 'source-atop'
-    ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, GRAD_W, GRAD_H)
+    ctx.fillStyle = capeGradient
+    ctx.fillRect(CAPE_FILL_X, CAPE_FILL_Y, CAPE_FILL_W, CAPE_FILL_H)
+
+    // Elytra area: fill 176,0 to 368,176, gradient starts at 272,16
+    const ELYTRA_FILL_X = 176
+    const ELYTRA_FILL_Y = 0
+    const ELYTRA_FILL_W = 192  // from 176 to 368
+    const ELYTRA_FILL_H = 176
+    const ELYTRA_GRAD_START_X = 272
+    const ELYTRA_GRAD_START_Y = 16
+    const ELYTRA_GRAD_W = 96   // from 272 to 368
+    const ELYTRA_GRAD_H = 160  // from 16 to 176
+    const elytraGradient = this.createGradientAt(ctx, ELYTRA_GRAD_START_X, ELYTRA_GRAD_START_Y, ELYTRA_GRAD_W, ELYTRA_GRAD_H, gradientColors, gradDirection)
+    ctx.fillStyle = elytraGradient
+    ctx.fillRect(ELYTRA_FILL_X, ELYTRA_FILL_Y, ELYTRA_FILL_W, ELYTRA_FILL_H)
 
     // Draw emoji tiled pattern above the color but below user images
     if (options?.emojiEnabled && options?.emoji) {
@@ -151,10 +170,14 @@
         return s - Math.floor(s)
       }
 
-      for (let y = 0; y < GRAD_H + spacing; y += spacing) {
+      // Emoji covers entire gradient area (cape + elytra = 0,0 to 368,176)
+      const EMOJI_AREA_W = 368
+      const EMOJI_AREA_H = 176
+
+      for (let y = 0; y < EMOJI_AREA_H + spacing; y += spacing) {
         const rowIndex = Math.floor(y / spacing)
         const offset = (rowIndex % 2 === 0) ? 0 : spacing / 2
-        for (let x = -spacing; x < GRAD_W + spacing; x += spacing) {
+        for (let x = -spacing; x < EMOJI_AREA_W + spacing; x += spacing) {
           let px = x + offset + spacing / 2
           let py = y + spacing / 2
 
@@ -247,18 +270,21 @@
     }
   }
 
-  private createGradient(
+  private createGradientAt(
     ctx: CanvasRenderingContext2D,
-    canvas: HTMLCanvasElement,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
     colors: string[],
     direction: 'vertical' | 'horizontal'
   ): CanvasGradient {
     let gradient: CanvasGradient
 
     if (direction === 'vertical') {
-      gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
+      gradient = ctx.createLinearGradient(x, y, x, y + height)
     } else {
-      gradient = ctx.createLinearGradient(0, 0, canvas.width, 0)
+      gradient = ctx.createLinearGradient(x, y, x + width, y)
     }
 
     if (colors.length === 0) {

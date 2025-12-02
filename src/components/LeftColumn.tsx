@@ -7,6 +7,7 @@ interface LeftColumnProps {
   onElytraImageChange: (img: HTMLImageElement | null) => void
   onDownload: () => void
   onReset: () => void
+  onShowTemplates: () => void
   hasFrontImage: boolean
   hasBackImage: boolean
   hasElytraImage: boolean
@@ -18,6 +19,7 @@ const LeftColumn: FC<LeftColumnProps> = ({
   onElytraImageChange,
   onDownload,
   onReset,
+  onShowTemplates,
   hasFrontImage,
   hasBackImage,
   hasElytraImage,
@@ -73,6 +75,15 @@ const LeftColumn: FC<LeftColumnProps> = ({
           onCancel={() => setCropperState({ show: false, imageUrl: '', type: null })}
         />
       )}
+
+      <button
+        type="button"
+        className="btn btn-templates-panel"
+        onClick={onShowTemplates}
+        aria-label="Browse design templates"
+      >
+        🎨 Templates
+      </button>
 
       <section className="panel-section">
         <h2 className="section-title">🖼️ Images</h2>

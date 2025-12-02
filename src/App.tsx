@@ -1,12 +1,14 @@
-﻿import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import CanvasRenderer from './utils/CanvasRenderer'
 import LeftColumn from './components/LeftColumn'
 import MiddleColumn from './components/MiddleColumn'
+import TemplateGallery from './components/TemplateGallery'
 import { useCapeState } from './hooks/useCapeState'
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [showTemplates, setShowTemplates] = useState(false)
   const {
     frontImage,
     backImage,
@@ -53,6 +55,7 @@ function App() {
     setTextBold,
     setTextItalic,
     reset,
+    loadTemplate,
   } = useCapeState()
 
   const renderer = CanvasRenderer.getInstance()
@@ -109,6 +112,14 @@ function App() {
 
   return (
     <div className="app">
+      {/* Template Gallery Modal */}
+      {showTemplates && (
+        <TemplateGallery 
+          onSelectTemplate={loadTemplate} 
+          onClose={() => setShowTemplates(false)} 
+        />
+      )}
+
       <header className="app-header">
         <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="NRC Cape Creator" className="logo" />
       </header>
@@ -134,6 +145,7 @@ function App() {
             onElytraImageChange={setElytraImage}
             onDownload={handleDownload}
             onReset={handleReset}
+            onShowTemplates={() => setShowTemplates(true)}
             hasFrontImage={frontImage !== null}
             hasBackImage={backImage !== null}
             hasElytraImage={elytraImage !== null}

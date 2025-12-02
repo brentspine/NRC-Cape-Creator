@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CapeTemplate } from '../data/templates'
 
 export const useCapeState = () => {
   const [frontImage, setFrontImage] = useState<HTMLImageElement | null>(null)
@@ -49,6 +50,30 @@ export const useCapeState = () => {
     setTextItalic(false)
   }
 
+  const loadTemplate = (template: CapeTemplate) => {
+    const s = template.settings
+    setGradientColors(s.gradientColors)
+    setGradDirection(s.gradDirection)
+    setEmojiEnabled(s.emojiEnabled)
+    setEmoji(s.emoji)
+    setEmojiSize(s.emojiSize)
+    setEmojiSpacing(s.emojiSpacing)
+    setEmojiOpacity(s.emojiOpacity)
+    setEmojiRotation(s.emojiRotation)
+    setEmojiRandomRotation(s.emojiRandomRotation)
+    setEmojiJitter(s.emojiJitter)
+    setEmojiApplyToElytra(s.emojiApplyToElytra)
+    setEmojiSeed(s.emojiSeed)
+    setTextColor(s.textColor)
+    setTextStrokeEnabled(s.textStrokeEnabled)
+    setTextStrokeColor(s.textStrokeColor)
+    setTextStrokeWidth(s.textStrokeWidth)
+    setTextFont(s.textFont)
+    setTextBold(s.textBold)
+    setTextItalic(s.textItalic)
+    // Note: Images are preserved when loading a template
+  }
+
   return {
     frontImage,
     backImage,
@@ -95,5 +120,6 @@ export const useCapeState = () => {
     setTextBold,
     setTextItalic,
     reset,
+    loadTemplate,
   }
 }

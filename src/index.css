@@ -42,8 +42,11 @@ body {
 .app-header {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 4vw, 32px);
   padding: clamp(4px, 1vw, 12px) 0;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -62,6 +65,7 @@ body {
 
 /* ===== PREVIEW PANEL ===== */
 .preview-panel {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
