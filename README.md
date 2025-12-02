@@ -10,11 +10,18 @@
 
 <p align="center">
   <a href="#-features">Features</a> •
-  <a href="#-demo">Demo</a> •
   <a href="#-getting-started">Getting Started</a> •
-  <a href="#-usage">Usage</a> •
-  <a href="#-tech-stack">Tech Stack</a>
+  <a href="#-usage">Usage</a>
 </p>
+
+---
+
+<div align="center">
+
+## 🖥️ Demo  
+**🔗 Live Demo:** [NRC Cape Creator](https://einp2pe.github.io/NRC-Cape-Creator/)
+
+</div>
 
 ---
 
@@ -73,12 +80,6 @@ Built-in safety system that blocks:
 - **Ultra-wide (21:9)** – Extended layout
 - **Tall phones (19:9)** – Compact mode
 - **iOS Safe Areas** – Notch-aware design
-
----
-
-## 🖥️ Demo
-
-**🔗 Live Demo:** [https://einp2pe.github.io/NRC-Cape-Creator/](https://einp2pe.github.io/NRC-Cape-Creator/)
 
 ---
 
@@ -191,20 +192,8 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📜 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
 ## 🙏 Credits
 
-- **NRC Community** – For the inspiration and support
-- **Google Fonts** – For the amazing font library
-- **Minecraft** – For the cape system that started it all
-
----
-
-<p align="center">
-  Made with ❤️ for the NRC Community
-</p>
+- **NRC Community**
+- **Google Fonts**
+- **Minecraft**
