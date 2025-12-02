@@ -1,4 +1,5 @@
 import { FC, useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 interface ImageCropperProps {
   imageUrl: string
@@ -142,7 +143,7 @@ const ImageCropper: FC<ImageCropperProps> = ({
     onCropComplete(image)
   }
 
-  return (
+  const modalContent = (
     <div className="cropper-overlay">
       <div className="cropper-modal">
         <h3>🎬 Crop {label}</h3>
@@ -172,6 +173,9 @@ const ImageCropper: FC<ImageCropperProps> = ({
       </div>
     </div>
   )
+
+  // Use portal to render at document body level, escaping any parent overflow/positioning
+  return createPortal(modalContent, document.body)
 }
 
 export default ImageCropper
