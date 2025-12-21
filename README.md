@@ -8,30 +8,14 @@
   <strong>Create custom Minecraft capes with gradients, emojis, text, templates, and a live 3D preview.</strong>
 </p>
 
-### (Legacy) Gradient & Color Workflow
-- Supports unlimited colors per gradient (add/remove/reorder)
-- Inline color strip with drag-and-drop reordering
-- Separate elytra gradient toggle — apply different gradient to wings
-
-
 <p align="center">
   <a href="#-features">Features</a> •
   <a href="#-getting-started">Getting Started</a> •
-
-### (Legacy) Image Features
-- Smart positioning for front/back/elytra regions
-- Easy removal of individual images and reset behavior
 
   <a href="#-usage">Usage</a>
 </p>
 
 ---
-
-### (Legacy) Overlay / Typography
-- Text or emoji patterns — repeat a string or emoji across the cape texture
-- Extensive font options (system + categorized Google Fonts)
-- Stroke width control, color, bold/italic toggles
-
 
 <div align="center">
 
@@ -39,11 +23,6 @@
 **🔗 Live Demo:** [NRC Cape Creator](https://einp2pe.github.io/NRC-Cape-Creator/)
 
 </div>
-
-### (Legacy) Overlay Controls — detailed
-- Slider controls for Size, Spacing, Opacity, Rotation, Jitter
-- Random Rotation checkbox, per-tile jitter, numeric Seed input for reproducibility
-- Checkbox to include/exclude elytra from overlays
 
 
 ---
